@@ -33,9 +33,10 @@
     fieldState = value?.fieldState;
   });
 
-  if (width) $component.styles.normal.width = width + "px";
-
-  if (height) $component.styles.normal.height = height + "px";
+  $: overrideWdith = width ? width + "px" : "100%";
+  $: overrideHeight = height ? height + "px" : "auto";
+  $: $component.styles.normal.width = overrideWdith;
+  $: $component.styles.normal.height = overrideHeight;
 
   const handleInputEnterKey = (e) => {
     if (e.keyCode === 13 && value && onEnterKey) {
@@ -61,7 +62,10 @@
   <div class="placeholder">Form components need to be wrapped in a form</div>
 {:else}
   <div class="spectrum-Form-itemField" use:styleable={$component.styles}>
-    <div class="spectrum-Textfield" style="width:{width};height:{height};">
+    <div
+      class="spectrum-Textfield"
+      style="width:{overrideWdith};height:{overrideHeight};"
+    >
       <input
         bind:value
         type="text"
@@ -89,6 +93,7 @@
   }
 
   .spectrum-Form-itemField {
+    display: flex;
     position: relative;
   }
 

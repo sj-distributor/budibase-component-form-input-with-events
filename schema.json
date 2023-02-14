@@ -50,7 +50,7 @@
                 "context": [
                     {
                         "key": "value",
-                        "label": "Field Value"
+                        "label": "Value"
                     }
                 ]
             },
