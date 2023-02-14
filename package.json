@@ -1,6 +1,6 @@
 {
     "name": "budibase-component-form-input",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Mainly distinguish between enter key events and loss of focus events",
     "license": "MIT",
     "svelte": "index.js",

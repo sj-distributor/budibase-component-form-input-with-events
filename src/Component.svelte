@@ -73,8 +73,8 @@
       />
     </div>
 
-    {#if fieldState.error}
-      <div class="error">{fieldState.error}</div>
+    {#if fieldState?.error}
+      <div class="error">{fieldState?.error}</div>
     {/if}
   </div>
 {/if}
