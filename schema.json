@@ -2,7 +2,7 @@
     "type": "component",
     "metadata": {},
     "schema": {
-        "name": "budibase-component-form-input",
+        "name": "budibase-component-form-input-with-events",
         "friendlyName": "form-input",
         "description": "Mainly distinguish between enter key events and loss of focus events",
         "icon": "Text",
