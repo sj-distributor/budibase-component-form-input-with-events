@@ -16,6 +16,11 @@
                 "required": true
             },
             {
+                "key": "label",
+                "type": "text",
+                "label": "Label"
+            },
+            {
                 "key": "placeholder",
                 "type": "text",
                 "label": "Placeholder"
@@ -32,13 +37,13 @@
                     {
                         "key": "width",
                         "type": "number",
-                        "label": "Width",
+                        "label": "Width (px)",
                         "defaultValue": "auto"
                     },
                     {
                         "key": "height",
                         "type": "number",
-                        "label": "Height",
+                        "label": "Height (px)",
                         "defaultValue": "auto"
                     }
                 ]
@@ -64,7 +69,12 @@
                         "label": "Value"
                     }
                 ]
-            }
+            },
+            {
+                "type": "validation/number",
+                "label": "Validation",
+                "key": "validation"
+              }
         ]
     }
 }

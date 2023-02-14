@@ -2,53 +2,65 @@
   import { getContext, onDestroy } from "svelte";
 
   export let field;
+  export let label;
   export let width;
   export let height;
   export let onBlur;
+  export let validation;
   export let onEnterKey;
   export let placeholder;
-  export let defaultValue;
+  export let defaultValue = null;
 
   const formContext = getContext("form");
   const { styleable } = getContext("sdk");
   const component = getContext("component");
   const formStepContext = getContext("form-step");
+  const fieldGroupContext = getContext("field-group");
 
   let fieldApi;
   let fieldState;
-  let value = defaultValue;
 
   const formApi = formContext?.formApi;
+  const labelPos = fieldGroupContext?.labelPosition || "above";
 
   $: formStep = formStepContext ? $formStepContext || 1 : 1;
 
   $: formField = formApi?.registerField(
     field,
     "text",
-    "",
+    defaultValue,
     false,
-    null,
+    validation,
     formStep
   );
 
   $: unsubscribe = formField?.subscribe((value) => {
-    fieldApi = value?.fieldApi;
     fieldState = value?.fieldState;
+    fieldApi = value?.fieldApi;
   });
 
-  $: overrideWdith = width ? width + "px" : "100%";
+  $: value = fieldState?.value || defaultValue;
+
+  $: labelClass =
+    labelPos === "above" ? "" : `spectrum-FieldLabel--${labelPos}`;
+
+  $: overrideWdith = width ? width + "px" : "auto";
   $: overrideHeight = height ? height + "px" : "auto";
 
   const handleInputEnterKey = (e) => {
+    value = e.target.value;
+
     if (e.keyCode === 13 && value && onEnterKey) {
       onEnterKey({ value });
     }
   };
 
   const handleInputBlur = (e) => {
-    if (e.type === "blur" && value && onBlur) {
-      fieldApi?.setValue(value);
+    value = e.target.value;
 
+    fieldApi?.setValue(value);
+
+    if (e.type === "blur" && value && onBlur) {
       onBlur({ value });
     }
   };
@@ -59,21 +71,28 @@
   });
 </script>
 
-{#if !formContext}
-  <div class="placeholder">Form components need to be wrapped in a form</div>
-{:else}
-  <div
-    class="spectrum-Form spectrum-Form--labelsAbove"
-    use:styleable={$component.styles}
-  >
-    <div
-      class="spectrum-Form-item"
-      style="width: {overrideWdith};height:{overrideHeight};"
-    >
+<div class="spectrum-Form--labelsAbove">
+  <div class="spectrum-Form-item" use:styleable={$component.styles}>
+    {#if !formContext}
+      <div class="placeholder">
+        Form components need to be wrapped in a form
+      </div>
+    {:else}
+      <label
+        class:hidden={!label}
+        for={fieldState?.fieldId}
+        class={`spectrum-FieldLabel spectrum-FieldLabel--sizeM spectrum-Form-itemLabel ${labelClass}`}
+      >
+        {label || " "}
+      </label>
+
       <div class="spectrum-Form-itemField">
-        <div class="spectrum-Textfield">
+        <div
+          class="spectrum-Textfield"
+          style={`width: ${overrideWdith};height:${overrideHeight};`}
+        >
           <input
-            bind:value
+            {value}
             type="text"
             {placeholder}
             inputmode="text"
@@ -87,39 +106,26 @@
           <div class="error">{fieldState?.error}</div>
         {/if}
       </div>
-    </div>
+    {/if}
   </div>
-{/if}
+</div>
 
 <style>
   .placeholder {
     color: var(--spectrum-global-color-gray-600);
   }
 
-  .spectrum-Form {
-    position: relative;
+  label {
+    white-space: nowrap;
+  }
+
+  label.hidden {
+    padding: 0;
   }
 
   .spectrum-Form-itemField {
-    width: 100%;
     position: relative;
-  }
-
-  .spectrum-Textfield {
     width: 100%;
-  }
-
-  .spectrum-Textfield-input {
-    padding: 10px;
-    border-radius: 4px;
-    text-align: left;
-  }
-
-  .spectrum-Textfield-input:focus {
-    border-color: var(
-      --spectrum-textfield-m-border-color-down,
-      var(--spectrum-alias-border-color-mouse-focus)
-    );
   }
 
   .error {
@@ -129,5 +135,10 @@
     );
     font-size: var(--spectrum-global-dimension-font-size-75);
     margin-top: var(--spectrum-global-dimension-size-75);
+  }
+
+  .spectrum-FieldLabel--right,
+  .spectrum-FieldLabel--left {
+    padding-right: var(--spectrum-global-dimension-size-200);
   }
 </style>
