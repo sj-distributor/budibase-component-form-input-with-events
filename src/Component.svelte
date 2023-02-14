@@ -39,9 +39,6 @@
   $: overrideWdith = width ? width + "px" : "100%";
   $: overrideHeight = height ? height + "px" : "auto";
 
-  $component.styles.normal.width = overrideWdith;
-  $component.styles.normal.height = overrideHeight;
-
   const handleInputEnterKey = (e) => {
     if (e.keyCode === 13 && value && onEnterKey) {
       onEnterKey({ value });
@@ -66,10 +63,13 @@
   <div class="placeholder">Form components need to be wrapped in a form</div>
 {:else}
   <div
-    use:styleable={$component.styles}
     class="spectrum-Form spectrum-Form--labelsAbove"
+    use:styleable={$component.styles}
   >
-    <div class="spectrum-Form-item">
+    <div
+      class="spectrum-Form-item"
+      style="width: {overrideWdith};height:{overrideHeight};"
+    >
       <div class="spectrum-Form-itemField">
         <div class="spectrum-Textfield">
           <input
