@@ -19,7 +19,9 @@
   let value = defaultValue;
 
   const formApi = formContext?.formApi;
+
   $: formStep = formStepContext ? $formStepContext || 1 : 1;
+
   $: formField = formApi?.registerField(
     field,
     "text",
@@ -28,6 +30,7 @@
     null,
     formStep
   );
+
   $: unsubscribe = formField?.subscribe((value) => {
     fieldApi = value?.fieldApi;
     fieldState = value?.fieldState;
@@ -35,8 +38,9 @@
 
   $: overrideWdith = width ? width + "px" : "100%";
   $: overrideHeight = height ? height + "px" : "auto";
-  $: $component.styles.normal.width = overrideWdith;
-  $: $component.styles.normal.height = overrideHeight;
+
+  $component.styles.normal.width = overrideWdith;
+  $component.styles.normal.height = overrideHeight;
 
   const handleInputEnterKey = (e) => {
     if (e.keyCode === 13 && value && onEnterKey) {
@@ -61,45 +65,53 @@
 {#if !formContext}
   <div class="placeholder">Form components need to be wrapped in a form</div>
 {:else}
-  <div class="spectrum-Form-itemField" use:styleable={$component.styles}>
-    <div
-      class="spectrum-Textfield"
-      style="width:{overrideWdith};height:{overrideHeight};"
-    >
-      <input
-        bind:value
-        type="text"
-        {placeholder}
-        inputmode="text"
-        on:blur={handleInputBlur}
-        on:keyup={handleInputEnterKey}
-        class="spectrum-Textfield-input"
-      />
-    </div>
+  <div
+    use:styleable={$component.styles}
+    class="spectrum-Form spectrum-Form--labelsAbove"
+  >
+    <div class="spectrum-Form-item">
+      <div class="spectrum-Form-itemField">
+        <div class="spectrum-Textfield">
+          <input
+            bind:value
+            type="text"
+            {placeholder}
+            inputmode="text"
+            on:blur={handleInputBlur}
+            on:keyup={handleInputEnterKey}
+            class="spectrum-Textfield-input"
+          />
+        </div>
 
-    {#if fieldState?.error}
-      <div class="error">{fieldState?.error}</div>
-    {/if}
+        {#if fieldState?.error}
+          <div class="error">{fieldState?.error}</div>
+        {/if}
+      </div>
+    </div>
   </div>
 {/if}
 
 <style>
-  .spectrum-Textfield {
-    width: 100%;
-  }
-
   .placeholder {
     color: var(--spectrum-global-color-gray-600);
   }
 
-  .spectrum-Form-itemField {
-    display: flex;
+  .spectrum-Form {
     position: relative;
+  }
+
+  .spectrum-Form-itemField {
+    width: 100%;
+    position: relative;
+  }
+
+  .spectrum-Textfield {
+    width: 100%;
   }
 
   .spectrum-Textfield-input {
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 4px;
     text-align: left;
   }
 
