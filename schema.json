@@ -1,0 +1,70 @@
+{
+    "type": "component",
+    "metadata": {},
+    "schema": {
+        "name": "budibase-component-form-input",
+        "friendlyName": "form-input",
+        "description": "Mainly distinguish between enter key events and loss of focus events",
+        "icon": "Text",
+        "skeleton": false,
+        "editable": true,
+        "settings": [
+            {
+                "key": "field",
+                "type": "field/string",
+                "label": "Field",
+                "required": true
+            },
+            {
+                "key": "placeholder",
+                "type": "text",
+                "label": "Placeholder"
+            },
+            {
+                "key": "defaultValue",
+                "type": "text",
+                "label": "Default Value"
+            },
+            {
+                "name": "Size",
+                "section": true,
+                "settings": [
+                    {
+                        "key": "width",
+                        "type": "number",
+                        "label": "Width",
+                        "defaultValue": "auto"
+                    },
+                    {
+                        "key": "height",
+                        "type": "number",
+                        "label": "Height",
+                        "defaultValue": "auto"
+                    }
+                ]
+            },
+            {
+                "key": "onEnterKey",
+                "type": "event",
+                "label": "On Enter Key",
+                "context": [
+                    {
+                        "key": "value",
+                        "label": "Field Value"
+                    }
+                ]
+            },
+            {
+                "key": "onBlur",
+                "type": "event",
+                "label": "On Blur",
+                "context": [
+                    {
+                        "key": "value",
+                        "label": "Field Value"
+                    }
+                ]
+            }
+        ]
+    }
+}
