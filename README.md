@@ -1,4 +1,4 @@
-[![Release](https://github.com/Simoon-F/budibase-component-form-input/actions/workflows/release.yml/badge.svg)](https://github.com/Simoon-F/budibase-component-form-input/actions/workflows/release.yml)
+[![Release](https://github.com/Simoon-F/budibase-component-form-input/actions/workflows/release.yml/badge.svg?branch=master)](https://github.com/Simoon-F/budibase-component-form-input/actions/workflows/release.yml)
 [![MIT License](https://img.shields.io/npm/l/react-native-tab-view.svg?style=flat-square)](https://github.com/Simoon-F/budibase-component-form-input/blob/master/LICENSE)
 
 # Budibase-component-custom-input
